@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
 import { AuthedRequest } from "../types/express";
 import { verifyToken, requireAdmin } from "../middlewares/auth.js";
-import * as AdminService from "../services/admin.service";
+import * as AdminService from "../services/admin.service.js";
 import testimonialsRoutes from "./testimonials.routes.js";
 import naoSeCaleRoutes from "./naoSeCale.routes.js";
 
