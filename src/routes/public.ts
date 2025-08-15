@@ -15,7 +15,7 @@ import {
   findAllDocumentos, //section9 
   findByIdDocuments, 
   findAllSPporTodas //section10
-} from "../services/public.Service";
+} from "../services/public.Service.js";
 
 const router = Router();
 
