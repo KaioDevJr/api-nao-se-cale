@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Conteúdo público
+    match /publicContent/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /banners/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Denúncias
+    match /reports/{doc} {
+      allow create: if true; // público
+      allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}
