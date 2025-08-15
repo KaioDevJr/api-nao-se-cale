@@ -1,4 +1,4 @@
-import { admin, db, firestore } from './firebase.js';
+import { admin, db } from './firebase.js';
 import { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 const publicContent = db.collection('publicContent');
 const banners = db.collection('banners');

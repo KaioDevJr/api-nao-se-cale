@@ -106,8 +106,8 @@ export const partnerInstitutionsSectionSchema = z.object({
 // Schemas para os itens dentro da seção de Depoimentos e Vídeos
 export const testimonialItemSchema = z.object({
   type: z.literal("testimonial"),
-  quote: z.string({ required_error: "O depoimento é obrigatório." }).min(10, { message: "O depoimento deve ter pelo menos 10 caracteres." }),
-  author: z.string({ required_error: "O nome do autor é obrigatório." }).min(3, { message: "O nome do autor deve ter pelo menos 3 caracteres." }),
+  quote: z.string().min(10, { message: "O depoimento deve ter pelo menos 10 caracteres." }),
+  author: z.string().min(3, { message: "O nome do autor deve ter pelo menos 3 caracteres." }),
   role: z.string().optional(), // Ex: "Mãe de vítima", "Professora"
   imageUrl: z.string().url({ message: "URL da imagem do autor inválida." }).optional(), // Foto do autor
 });
