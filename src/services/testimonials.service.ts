@@ -1,4 +1,4 @@
-import { db, admin } from './firebase';
+import { db, admin } from './firebase.js';
 import { Testimonial, CreateTestimonial, UpdateTestimonial } from '../schemas/testimonials.schema';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 // Importa o banco de dados Firestore e o módulo admin do Firebase para manipulação de dados.

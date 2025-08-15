@@ -1,5 +1,5 @@
 import { Router, Response } from "express";
-import { admin, db } from "../services/firebase";
+import { admin, db } from "../services/firebase.js";
 import { AuthedRequest } from "../types/express";
 import { anySectionSchema } from "../schemas/section.schemas";
 
