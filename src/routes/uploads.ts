@@ -1,6 +1,6 @@
 import { Router, Response, NextFunction } from "express";
 import multer from "multer";
-import { bucket } from "../services/firebase";
+import { bucket } from "../services/firebase.js";
 import { AuthedRequest } from "../types/express";
 import { verifyToken, requireAdmin } from "../middlewares/auth.js";
 import * as UploadService from "../services/upload.service.js";
