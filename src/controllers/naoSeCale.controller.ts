@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as NaoSeCaleService from '../services/naoSeCale.service';
+import * as NaoSeCaleService from '../services/naoSeCale.service.js';
 import { createNaoSeCaleSchema, updateNaoSeCaleSchema } from '../schemas/naoSeCale.schema';
 
 /**

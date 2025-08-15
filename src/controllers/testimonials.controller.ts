@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as TestimonialService from '../services/testimonials.service';
+import * as TestimonialService from '../services/testimonials.service.js';
 import { createTestimonialSchema, updateTestimonialSchema } from '../schemas/testimonials.schema';
 
 /**
