@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as testimonialController from '../controllers/testimonials.controller.js';
+import * as testimonialController from '../controllers/testimonials.controller';
 // Importa o módulo de autenticação para verificar se o usuário é um administrador
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 

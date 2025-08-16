@@ -1,122 +1,113 @@
 import { z } from "zod";
 
-// Define a "forma" de cada tipo de seção
+// ===================== Hero Section =====================
 export const heroSectionSchema = z.object({
   type: z.literal("hero"),
-  title: z.string().min(3),
+  title: z.string().min(3, { message: "O título deve ter pelo menos 3 caracteres." }),
   subtitle: z.string().optional(),
-  imageUrl: z.string().url(),
+  imageUrl: z.url({ message: "URL da imagem inválida." }),
   ctaText: z.string().optional(),
   ctaLink: z.string().optional(),
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
+// ===================== Text Section =====================
 export const textSectionSchema = z.object({
   type: z.literal("text"),
-  title: z.string().min(3),
-  body: z.string().min(10),
+  title: z.string().min(3, { message: "O título deve ter pelo menos 3 caracteres." }),
+  body: z.string().min(10, { message: "O corpo do texto deve ter pelo menos 10 caracteres." }),
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
-// Novo tipo de seção: Galeria de Imagens
+// ===================== Image Gallery Section =====================
 export const imageGallerySectionSchema = z.object({
   type: z.literal("imageGallery"),
-  title: z.string().min(3),
+  title: z.string().min(3, { message: "O título deve ter pelo menos 3 caracteres." }),
   description: z.string().optional(),
   images: z.array(z.object({
-    url: z.string().url(),
-    alt: z.string().min(1, { message: "O texto alternativo da imagem é obrigatório para acessibilidade." }),
+    url: z.url({ message: "URL da imagem inválida." }),
+    alt: z.string().min(1, { message: "O texto alternativo da imagem é obrigatório." }),
     caption: z.string().optional(),
-  })).min(1, { message: "A galeria de imagens deve conter pelo menos uma imagem." }),
+  })).min(1, { message: "A galeria deve conter pelo menos uma imagem." }),
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
-// Novo tipo de seção: Conteúdo Global (Header/Footer, etc.)
+// ===================== Global Content Section =====================
 export const globalContentSectionSchema = z.object({
   type: z.literal("globalContent"),
-  name: z.string().min(1, { message: "O nome da seção global é obrigatório (ex: 'header', 'footer', 'sidebar')." }),
-  // Campos para logo
-  logoUrl: z.string().url().optional(),
+  name: z.string().min(1, { message: "O nome da seção global é obrigatório." }),
+  logoUrl: z.url({ message: "URL inválida." }).optional(),
   logoAlt: z.string().optional(),
-  // Campos para links de navegação
   navLinks: z.array(z.object({
-    text: z.string().min(1),
-    url: z.string().url(),
-    target: z.enum(["_self", "_blank"]).default("_self").optional(), // Para abrir em nova aba, por exemplo
+    text: z.string().min(1, { message: "O texto do link é obrigatório." }),
+    url: z.url({ message: "URL inválida." }),
+    target: z.enum(["_self", "_blank"]).default("_self").optional(),
   })).optional(),
-  // Campos para links de redes sociais
   socialLinks: z.array(z.object({
-    platform: z.string().min(1), // Ex: "facebook", "instagram", "twitter"
-    url: z.string().url(),
-    iconUrl: z.string().url().optional(), // URL para o ícone da rede social
+    platform: z.string().min(1, { message: "O nome da rede social é obrigatório." }),
+    url: z.url({ message: "URL inválida." }),
+    iconUrl: z.url({ message: "URL inválida." }).optional(),
   })).optional(),
-  // Campos para texto genérico (ex: copyright, endereço, slogan)
   mainText: z.string().optional(),
-  // Campos para informações de contato
   contactEmail: z.string().email().optional(),
   contactPhone: z.string().optional(),
   contactAddress: z.string().optional(),
-  order: z.number().default(0), // Mantido para consistência, embora possa ser menos relevante para elementos globais
-  isActive: z.boolean().default(false), // Para ativar/desativar a exibição do elemento global
+  order: z.number().default(0),
+  isActive: z.boolean().default(false),
 });
 
-// Novo tipo de seção: Canais de Denúncia e Delegacias
+// ===================== Reporting Channels Section =====================
 export const reportingChannelsSectionSchema = z.object({
   type: z.literal("reportingChannels"),
   title: z.string().min(3, { message: "O título da seção é obrigatório." }),
   description: z.string().optional(),
-
-  // Lista de canais de denúncia gerais (ex: Disque 100)
   channels: z.array(z.object({
     name: z.string().min(1, { message: "O nome do canal é obrigatório." }),
     description: z.string().optional(),
     phone: z.string().optional(),
-    website: z.string().url({ message: "URL do site inválida." }).optional(),
+    website: z.url({ message: "URL inválida." }).optional(),
   })).optional(),
-
-  // Lista de delegacias com contatos
   policeStations: z.array(z.object({
     name: z.string().min(1, { message: "O nome da delegacia é obrigatório." }),
     address: z.string().optional(),
     phone: z.string().min(8, { message: "O telefone deve ser válido." }),
   })).optional(),
-
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
-// Novo tipo de seção: Instituições Parceiras
+// ===================== Partner Institutions Section =====================
 export const partnerInstitutionsSectionSchema = z.object({
   type: z.literal("partnerInstitutions"),
   title: z.string().min(3, { message: "O título da seção é obrigatório." }),
   description: z.string().optional(),
   partners: z.array(z.object({
     name: z.string().min(1, { message: "O nome da instituição parceira é obrigatório." }),
-    logoUrl: z.string().url({ message: "URL do logo inválida." }),
-    websiteUrl: z.string().url({ message: "URL do site inválida." }).optional(),
+    logoUrl: z.url({ message: "URL do logo inválida." }),
+    websiteUrl: z.url({ message: "URL inválida." }).optional(),
     description: z.string().optional(),
-  })).min(1, { message: "A seção de instituições parceiras deve conter pelo menos uma instituição." }),
+  })).min(1, { message: "Deve conter pelo menos uma instituição parceira." }),
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
-// Schemas para os itens dentro da seção de Depoimentos e Vídeos
+// ===================== Testimonial / Video / Post Items =====================
 export const testimonialItemSchema = z.object({
   type: z.literal("testimonial"),
-  quote: z.string().min(10, { message: "O depoimento deve ter pelo menos 10 caracteres." }),
+  quote: z.string().min(10, { message: "O depoimento deve ter pelo menos 10 caracteres." }).optional,
   author: z.string().min(3, { message: "O nome do autor deve ter pelo menos 3 caracteres." }),
-  role: z.string().optional(), // Ex: "Mãe de vítima", "Professora"
-  imageUrl: z.string().url({ message: "URL da imagem do autor inválida." }).optional(), // Foto do autor
+  role: z.string().optional(),
+  imageUrl: z.url({ message: "URL da imagem inválida." }).optional(),
 });
 
 export const videoItemSchema = z.object({
   type: z.literal("video"),
   title: z.string().min(3, { message: "O título do vídeo é obrigatório." }),
-  videoUrl: z.string().url({ message: "URL do vídeo inválida." }), // Link para o vídeo (YouTube, Vimeo, etc.)
-  thumbnailUrl: z.string().url({ message: "URL da miniatura do vídeo inválida." }).optional(), // Imagem de capa do vídeo
+  videoUrl: z.url({ message: "URL do vídeo inválida." }),
+  thumbnailUrl: z.url({ message: "URL inválida." }).optional(),
   description: z.string().optional(),
 });
 
@@ -124,27 +115,57 @@ export const postItemSchema = z.object({
   type: z.literal("post"),
   title: z.string().min(3, { message: "O título da postagem é obrigatório." }),
   content: z.string().min(10, { message: "O conteúdo da postagem deve ter pelo menos 10 caracteres." }),
-  imageUrl: z.string().url({ message: "URL da imagem da postagem inválida." }).optional(),
+  imageUrl: z.url({ message: "A URL da imagem é inválida." }).optional(),
   author: z.string().optional(),
-  postUrl: z.string().url({ message: "URL da postagem inválida." }).optional(), // Link para a postagem completa
+  postUrl: z.url({ message: "A URL do post é inválida." }).optional(),
 });
 
-// Novo tipo de seção: Depoimentos e Vídeos
+// ===================== Testimonials and Videos Section =====================
 export const testimonialsAndVideosSectionSchema = z.object({
   type: z.literal("testimonialsAndVideos"),
   title: z.string().min(3, { message: "O título da seção é obrigatório." }),
   description: z.string().optional(),
   items: z.array(
     z.discriminatedUnion("type", [testimonialItemSchema, videoItemSchema, postItemSchema])
-  ).min(1, { message: "A seção de depoimentos e vídeos deve conter pelo menos um item." }),
+  ).min(1, { message: "Deve conter pelo menos um item." }),
   order: z.number().default(0),
   isActive: z.boolean().default(false),
 });
 
-// Schema "guarda-chuva" que valida qualquer um dos tipos de seção definidos.
-// O campo 'type' é usado para decidir qual schema usar.
-export const anySectionSchema = z.discriminatedUnion("type", [heroSectionSchema, textSectionSchema, imageGallerySectionSchema, globalContentSectionSchema, reportingChannelsSectionSchema, partnerInstitutionsSectionSchema, testimonialsAndVideosSectionSchema]);
+// ===================================================================================
+// == Schemas para Seções Específicas (CRUD de Admin)
+// ===================================================================================
 
-// ===================================================================================
-// == Schemas para Seções Específicas (CRUDs de Admin)
-// ===================================================================================
+// Schema para itens da seção de iniciativas
+export const iniciativaItemSchema = z.object({
+  type: z.literal("iniciativa"),
+  titulo: z.string().min(3, { message: "O título deve ter pelo menos 3 caracteres." }),
+  url: z.url({ message: "URL da iniciativa inválida." }),
+  ordem: z.number().min(0, { message: "A ordem deve ser um número positivo." }),
+  conteudo: z.string().min(10, { message: "O conteúdo deve ter pelo menos 10 caracteres." }),
+});
+
+// Schema para a seção de iniciativas
+export const sectionIniciativasSchema = z.object({
+  type: z.literal("sectionIniciativas"),
+  title: z.string().min(3, { message: "O título da seção é obrigatório." }),
+  description: z.string().optional(),
+  items: z.array(iniciativaItemSchema).min(1, { message: "A seção de iniciativas deve conter pelo menos um item." }),
+  order: z.number().default(0),
+  isActive: z.boolean().default(false),
+});
+
+// ===================== Any Section Schema =====================
+export const anySectionSchema = z.discriminatedUnion("type", [
+  heroSectionSchema,
+  textSectionSchema,
+  imageGallerySectionSchema,
+  globalContentSectionSchema,
+  reportingChannelsSectionSchema,
+  partnerInstitutionsSectionSchema,
+  testimonialsAndVideosSectionSchema,
+  sectionIniciativasSchema
+]);
+
+
+

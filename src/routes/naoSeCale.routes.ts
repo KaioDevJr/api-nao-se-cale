@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as naoSeCaleController from '../controllers/naoSeCale.controller.js';
+import * as naoSeCaleController from '../controllers/naoSeCale.controller';
 // Importa o módulo de autenticação para verificar se o usuário é um administrador
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 

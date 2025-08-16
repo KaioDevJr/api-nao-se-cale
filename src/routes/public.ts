@@ -4,7 +4,8 @@ import {
   findAllNaoSeCale, //section1
   findAllPorqueAderimos, //section2
   findAllCanaisDenuncia, //section3
-  getCurso, //section4
+  findByIdCanalDenuncia,
+  findAllCurso, //section4
   findAllIniciativas, //section5
   findAllInstParceiras, //section6
   findAllDepoimentos,   //section7
@@ -15,11 +16,11 @@ import {
   findAllDocumentos, //section9 
   findByIdDocuments, 
   findAllSPporTodas //section10
-} from "../services/public.Service.js";
+} from "../services/public.Service";
+import * as iniciativaController from '../controllers/sectionIniciativas.controller';
 
 const router = Router();
 
-// CONTEÚDOS PÚBLICOS...
 router.get("/", async (req, res) => {
   try {
     // ISSO FICA DENTRO DE PUBLIC.SERVICE.TS
@@ -27,7 +28,7 @@ router.get("/", async (req, res) => {
     const section1NaoSeCale = await findAllNaoSeCale(); 
     const section2PorqueAderimos = await findAllPorqueAderimos();
     const section3CanaisDenuncia = await findAllCanaisDenuncia();
-    const section4Curso = await getCurso();
+    const section4Curso = await findAllCurso();
     const section5Iniciativas = await findAllIniciativas();
     const section6InstParceiras = await findAllInstParceiras();
     const section7Depoimentos = await findAllDepoimentos();
@@ -53,6 +54,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Rotas públicas de iniciativas
+router.get("/iniciativas", iniciativaController.getIniciativas);
+router.get("/iniciativas/:id", iniciativaController.getIniciativaById);
+
+// Rotas públicas de canais de denúncia
+router.get("/canaisDenuncia", async (req, res) => {
+  try {
+    const canaisDenuncia = await findAllCanaisDenuncia();
+    return res.status(200).json(canaisDenuncia);
+  } catch (error) {
+    return res.status(500).json({msg: "Erro interno do servidor"});
+  }
+});
+
 router.get("/testimonials/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -61,6 +76,20 @@ router.get("/testimonials/:id", async (req, res) => {
       return res.status(200).json(depoimento);
     } else {
       return res.status(404).json({msg:"Depoimento não encontrado"});
+    }
+  } catch (error) {
+    return res.status(500).json({msg: "Erro interno do servidor"});
+  }
+});
+
+router.get("/canaisDenuncia/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const canalDenuncia = await findByIdCanalDenuncia(id);
+    if(canalDenuncia) {
+      return res.status(200).json(canalDenuncia);
+    } else {
+      return res.status(404).json({msg:"Canal de denúncia não encontrado"});
     }
   } catch (error) {
     return res.status(500).json({msg: "Erro interno do servidor"});

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { testimonialItemSchema } from './section.schemas.js';
+import { testimonialItemSchema } from './section.schemas';
 
 // O schema para criação de um depoimento individual é derivado do schema de item de depoimento,
 // omitindo o campo 'type', que é relevante apenas dentro de uma seção.

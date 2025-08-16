@@ -1,8 +1,7 @@
-import { db, admin } from './firebase.js';
+import { db, admin } from './firebase';
 import { Testimonial, CreateTestimonial, UpdateTestimonial } from '../schemas/testimonials.schema';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 // Importa o banco de dados Firestore e o módulo admin do Firebase para manipulação de dados.
-//  A coleção 'testimonials' é usada para armazenar depoimentos de usuários.
 
 
 const testimonialsCollection = db.collection('testimonials');

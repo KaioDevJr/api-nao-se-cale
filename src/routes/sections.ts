@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
-import { admin, db } from "../services/firebase.js";
+import { admin, db } from "../services/firebase";
 import { AuthedRequest } from "../types/express";
-import { anySectionSchema } from "../schemas/section.schemas.js";
+import { anySectionSchema } from "../schemas/section.schemas";
 
 const router = Router();
 const sectionsCollection = db.collection("publicContent");

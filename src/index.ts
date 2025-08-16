@@ -4,9 +4,10 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import publicRoutes from "./routes/public.js";
-import adminRoutes from "./routes/admin.js";
-import uploadRoutes from "./routes/uploads.js";
+import publicRoutes from "./routes/public";
+import adminRoutes from "./routes/admin";
+import uploadRoutes from "./routes/uploads";
+
 
 const app = express();
 

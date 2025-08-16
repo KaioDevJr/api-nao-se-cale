@@ -1,9 +1,13 @@
 import { Router, Response } from "express";
 import { AuthedRequest } from "../types/express";
 import { verifyToken, requireAdmin } from "../middlewares/auth.js";
-import * as AdminService from "../services/admin.service.js";
+import * as AdminService from "../services/admin.service";
 import testimonialsRoutes from "./testimonials.routes.js";
 import naoSeCaleRoutes from "./naoSeCale.routes.js";
+import sectionIniciativasRoutes from "./sectionIniciativas.routes";
+import postsRoutes from "./posts.routes.js";
+import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes";
+import porqueAderimosRoutes from "./porqueAderimos.routes";
 
 const router = Router();
 
@@ -93,6 +97,20 @@ router.use("/testimonials", testimonialsRoutes);
 
 router.use("/naoSeCale", naoSeCaleRoutes);
 
+/** -------- Seção Iniciativas -------- */
 
+router.use("/iniciativas", sectionIniciativasRoutes);
+
+/** -------- Seção Posts em Destaque -------- */
+
+router.use("/posts", postsRoutes);
+
+/** -------- Seção Canais de Denúncia -------- */
+
+router.use("/canaisDenuncia", sectionCanaisDenunciaRoutes);
+
+/** -------- Seção Porque Aderimos -------- */
+
+router.use("/porqueAderimos", porqueAderimosRoutes);
 
 export default router;

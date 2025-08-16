@@ -1,4 +1,4 @@
-import { db, admin } from './firebase.js';
+import { db, admin } from './firebase';
 import { NaoSeCale, CreateNaoSeCale, UpdateNaoSeCale } from '../schemas/naoSeCale.schema';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 

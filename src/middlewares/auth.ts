@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { admin } from "../services/firebase.js";
+import { admin } from "../services/firebase";
 import { AuthedRequest } from '../types/express';
 
 export async function verifyToken(req: AuthedRequest, res: Response, next: NextFunction) {
