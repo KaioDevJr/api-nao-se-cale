@@ -10,7 +10,7 @@ import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes.js";
 import porqueAderimosRoutes from "./porqueAderimos.routes.js";
 import usersRoutes from "./users.routes.js";
 
-const router = Router();
+const router = Router(); 
 
 // Tudo abaixo exige admin
 router.use(verifyToken, requireAdmin);

@@ -9,6 +9,7 @@ import adminRoutes from "./routes/admin.js";
 import uploadRoutes from "./routes/uploads.js";
 
 
+
 const app = express();
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
