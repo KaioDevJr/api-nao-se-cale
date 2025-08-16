@@ -4,9 +4,11 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import publicRoutes from "./routes/public";
-import adminRoutes from "./routes/admin";
-import uploadRoutes from "./routes/uploads";
+import publicRoutes from "./routes/public.js";
+import adminRoutes from "./routes/admin.js";
+import uploadRoutes from "./routes/uploads.js";
+
+
 
 const app = express();
 
@@ -32,5 +34,5 @@ app.use("/api/public", publicRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/uploads", uploadRoutes);
 
-const port = Number(process.env.PORT || 5000);
+const port = Number(process.env.PORT || 5001);
 app.listen(port, () => console.log(`API on http://localhost:${port}`));

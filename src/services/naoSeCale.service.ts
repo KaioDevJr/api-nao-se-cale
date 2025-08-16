@@ -1,5 +1,5 @@
-import { db, admin } from './firebase';
-import { NaoSeCale, CreateNaoSeCale, UpdateNaoSeCale } from '../schemas/naoSeCale.schema';
+import { db, admin } from './firebase.js';
+import { NaoSeCale, CreateNaoSeCale, UpdateNaoSeCale } from '../schemas/naoSeCale.schema.js';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 
 const naoSeCaleCollection = db.collection('sectionNaoSeCale');

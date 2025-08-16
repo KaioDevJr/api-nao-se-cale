@@ -1,4 +1,4 @@
-import { db } from "./firebase"
+import { db } from "./firebase.js"
 
 // Section 0 - Carrossel
 async function findAllCarrossel() {
@@ -39,12 +39,26 @@ async function findAllCanaisDenuncia() {
   return denuncias;
 };
 
-// Section 4 - Curso (doc único)
-async function getCurso() {
-  const doc = await db.collection("sectionCurso").doc("curso").get(); 
-  if (!doc.exists) return null;
-  const data = doc.data() as any;
-  return { id: doc.id, ...data };
+// Section 3 - Canal de Denúncia pelo ID
+async function findByIdCanalDenuncia(id: string) {
+  const doc = await db.collection("sectionCanaisDenuncia").doc(id).get();
+  if(doc.exists) {
+    const canalDenuncia = { id: doc.id, ...doc.data() }
+    return canalDenuncia;
+  } else {
+    return null;
+  }
+};
+
+// Section 4 - Curso 
+async function findAllCurso() {
+  const documents = await db.collection("sectionCurso").get();
+  const cursos: any[] = [];
+  documents.forEach(doc => {
+    const curso = { ...doc.data(), id: doc.id };
+    cursos.push(curso);
+  });
+  return cursos;
 };
 
 // Section 5 - Iniciativas
@@ -159,7 +173,8 @@ export {
   findAllNaoSeCale,        // section1
   findAllPorqueAderimos,   // section2
   findAllCanaisDenuncia,   // section3
-  getCurso,                // section4
+  findByIdCanalDenuncia,   // section3 ById
+  findAllCurso,            // section4
   findAllIniciativas,      // section5
   findAllInstParceiras,    // section6
   findAllDepoimentos,      // section7 e 14

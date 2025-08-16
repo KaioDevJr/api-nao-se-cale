@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as NaoSeCaleService from '../services/naoSeCale.service';
-import { createNaoSeCaleSchema, updateNaoSeCaleSchema } from '../schemas/naoSeCale.schema';
+import * as NaoSeCaleService from '../services/naoSeCale.service.js';
+import { createNaoSeCaleSchema, updateNaoSeCaleSchema } from '../schemas/naoSeCale.schema.js';
 
 /**
  * Controlador para a criação de um novo item da seção NaoSeCale.
