@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as postController from '../controllers/posts.controller';
+import * as postController from '../controllers/posts.controller.js';
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 
 const router = Router();

@@ -1,5 +1,5 @@
-import { db, admin } from './firebase';
-import { PorqueAderimos, CreatePorqueAderimos, UpdatePorqueAderimos } from '../schemas/porqueAderimos.schema';
+import { db, admin } from './firebase.js';
+import { PorqueAderimos, CreatePorqueAderimos, UpdatePorqueAderimos } from '../schemas/porqueAderimos.schema.js';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 
 const porqueAderimosCollection = db.collection('sectionPorqueAderimos');

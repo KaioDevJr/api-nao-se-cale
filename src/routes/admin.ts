@@ -1,13 +1,13 @@
 import { Router, Response } from "express";
 import { AuthedRequest } from "../types/express";
 import { verifyToken, requireAdmin } from "../middlewares/auth.js";
-import * as AdminService from "../services/admin.service";
+import * as AdminService from "../services/admin.service.js";
 import testimonialsRoutes from "./testimonials.routes.js";
 import naoSeCaleRoutes from "./naoSeCale.routes.js";
-import sectionIniciativasRoutes from "./sectionIniciativas.routes";
+import sectionIniciativasRoutes from "./sectionIniciativas.routes.js";
 import postsRoutes from "./posts.routes.js";
-import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes";
-import porqueAderimosRoutes from "./porqueAderimos.routes";
+import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes.js";
+import porqueAderimosRoutes from "./porqueAderimos.routes.js";
 
 const router = Router();
 

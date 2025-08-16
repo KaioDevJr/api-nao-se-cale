@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as PostService from '../services/posts.service';
-import { createPostSchema, updatePostSchema } from '../schemas/posts.schema';
+import * as PostService from '../services/posts.service.js';
+import { createPostSchema, updatePostSchema } from '../schemas/posts.schema.js';
 import { z } from "zod";
 
 export const createPost = async (req: Request, res: Response) => {

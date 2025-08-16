@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { iniciativaItemSchema } from './section.schemas';
+import { iniciativaItemSchema } from './section.schemas.js';
 
 // O schema para criação de uma iniciativa individual é derivado do schema de item de iniciativa,
 // omitindo o campo 'type', que é relevante apenas dentro de uma seção.

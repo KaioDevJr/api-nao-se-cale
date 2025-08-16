@@ -1,4 +1,4 @@
-import { db } from "./firebase"
+import { db } from "./firebase.js"
 
 // Section 0 - Carrossel
 async function findAllCarrossel() {

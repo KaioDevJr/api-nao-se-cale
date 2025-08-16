@@ -16,8 +16,8 @@ import {
   findAllDocumentos, //section9 
   findByIdDocuments, 
   findAllSPporTodas //section10
-} from "../services/public.Service";
-import * as iniciativaController from '../controllers/sectionIniciativas.controller';
+} from "../services/public.Service.js";
+import * as iniciativaController from '../controllers/sectionIniciativas.controller.js';
 
 const router = Router();
 

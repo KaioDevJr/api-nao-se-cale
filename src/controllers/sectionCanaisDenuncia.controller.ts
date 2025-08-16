@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as CanalDenunciaService from '../services/sectionCanaisDenuncia.service';
-import { createCanalDenunciaSchema, updateCanalDenunciaSchema } from '../schemas/sectionCanaisDenuncia.schema';
+import * as CanalDenunciaService from '../services/sectionCanaisDenuncia.service.js';
+import { createCanalDenunciaSchema, updateCanalDenunciaSchema } from '../schemas/sectionCanaisDenuncia.schema.js';
 
 /**
  * Controlador para a criação de um novo canal de denúncia.

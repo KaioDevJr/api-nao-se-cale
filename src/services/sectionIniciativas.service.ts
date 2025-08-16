@@ -1,5 +1,5 @@
-import { db, admin } from './firebase';
-import { Iniciativa, CreateIniciativa, UpdateIniciativa } from '../schemas/sectionIniciativas.schema';
+import { db, admin } from './firebase.js';
+import { Iniciativa, CreateIniciativa, UpdateIniciativa } from '../schemas/sectionIniciativas.schema.js';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 
 const sectionIniciativasCollection = db.collection('sectionIniciativas');

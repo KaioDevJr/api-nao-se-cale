@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as IniciativaService from '../services/sectionIniciativas.service';
-import { createIniciativaSchema, updateIniciativaSchema } from '../schemas/sectionIniciativas.schema';
+import * as IniciativaService from '../services/sectionIniciativas.service.js';
+import { createIniciativaSchema, updateIniciativaSchema } from '../schemas/sectionIniciativas.schema.js';
 
 /**
  * Controlador para a criação de uma nova iniciativa.

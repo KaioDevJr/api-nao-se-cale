@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as PorqueAderimosService from '../services/porqueAderimos.service';
-import { createPorqueAderimosSchema, updatePorqueAderimosSchema } from '../schemas/porqueAderimos.schema';
+import * as PorqueAderimosService from '../services/porqueAderimos.service.js';
+import { createPorqueAderimosSchema, updatePorqueAderimosSchema } from '../schemas/porqueAderimos.schema.js';
 
 /**
  * Controlador para a criação de um novo item "Porque Aderimos".

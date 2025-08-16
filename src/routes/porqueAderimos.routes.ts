@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as porqueAderimosController from '../controllers/porqueAderimos.controller';
+import * as porqueAderimosController from '../controllers/porqueAderimos.controller.js';
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 
 const router = Router();

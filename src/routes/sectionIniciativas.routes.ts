@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as iniciativaController from '../controllers/sectionIniciativas.controller';
+import * as iniciativaController from '../controllers/sectionIniciativas.controller.js';
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 
 const router = Router();

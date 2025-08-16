@@ -1,5 +1,5 @@
-import { db, admin } from './firebase';
-import { Post, CreatePost, UpdatePost } from '../schemas/posts.schema';
+import { db, admin } from './firebase.js';
+import { Post, CreatePost, UpdatePost } from '../schemas/posts.schema.js';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 
 const postsCollection = db.collection('sectionPostsDestaque');

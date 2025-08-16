@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as canalDenunciaController from '../controllers/sectionCanaisDenuncia.controller';
+import * as canalDenunciaController from '../controllers/sectionCanaisDenuncia.controller.js';
 // Importa o módulo de autenticação para verificar se o usuário é um administrador
 import { verifyToken, requireAdmin } from '../middlewares/auth.js';
 

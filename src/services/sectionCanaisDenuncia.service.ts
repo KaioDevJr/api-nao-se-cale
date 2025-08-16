@@ -1,5 +1,5 @@
-import { db, admin } from './firebase';
-import { CanalDenuncia, CreateCanalDenuncia, UpdateCanalDenuncia } from '../schemas/sectionCanaisDenuncia.schema';
+import { db, admin } from './firebase.js';
+import { CanalDenuncia, CreateCanalDenuncia, UpdateCanalDenuncia } from '../schemas/sectionCanaisDenuncia.schema.js';
 import { DocumentSnapshot, DocumentData } from 'firebase-admin/firestore';
 
 const canaisDenunciaCollection = db.collection('sectionCanaisDenuncia');

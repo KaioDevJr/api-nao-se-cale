@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { postItemSchema } from './section.schemas';
+import { postItemSchema } from './section.schemas.js';
 
 export const createPostSchema = postItemSchema.omit({ type: true });
 

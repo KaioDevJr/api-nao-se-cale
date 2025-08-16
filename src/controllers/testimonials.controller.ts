@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as TestimonialService from '../services/testimonials.service';
-import { createTestimonialSchema, updateTestimonialSchema } from '../schemas/testimonials.schema';
+import * as TestimonialService from '../services/testimonials.service.js';
+import { createTestimonialSchema, updateTestimonialSchema } from '../schemas/testimonials.schema.js';
 
 /**
  * Controlador para a criação de um novo depoimento.
