@@ -11,7 +11,7 @@ const isFirebaseAuthError = (
   return (
     typeof error === "object" &&
     error !== null &&
-      "code" in error &&
+    "code" in error &&
     "message" in error
   );
 };

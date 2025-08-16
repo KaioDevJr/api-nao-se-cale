@@ -13,7 +13,7 @@ import usersRoutes from "./users.routes.js";
 const router = Router(); 
 
 // Tudo abaixo exige admin
-router.use(verifyToken, requireAdmin);
+router.use(verifyToken, requireAdmin); 
 
 /** -------- Gerenciamento de Usuários -------- */
 router.use("/users", usersRoutes);
