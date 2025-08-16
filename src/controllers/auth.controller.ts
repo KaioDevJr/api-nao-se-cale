@@ -84,6 +84,9 @@ export const promoteUserToAdmin = asyncHandler(async (req: AuthedRequest, res: R
  */
 export const deleteUser = asyncHandler(async (req: AuthedRequest, res: Response) => {
   const { id } = req.params; // O ID aqui é o UID do Firebase
+  if (!id) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
 
   await admin.auth().deleteUser(id);
 
