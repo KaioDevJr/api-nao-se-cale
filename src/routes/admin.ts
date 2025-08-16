@@ -8,7 +8,7 @@ import sectionIniciativasRoutes from "./sectionIniciativas.routes.js";
 import postsRoutes from "./posts.routes.js";
 import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes.js";
 import porqueAderimosRoutes from "./porqueAderimos.routes.js";
-import { createAdminUser, promoteUserToAdmin, listAllUsers } from "../controllers/auth.controller.js";
+import { createAdminUser, promoteUserToAdmin, listAllUsers, deleteUser } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -34,6 +34,9 @@ router.post("/users", createAdminUser);
 
 // Promove um usuário existente para admin, baseado no e-mail
 router.put("/users/promote", promoteUserToAdmin);
+
+// Deleta um usuário pelo seu UID
+router.delete("/users/:id", deleteUser);
 
 
 router.post("/banners/confirm", async (req: AuthedRequest, res: Response) => {

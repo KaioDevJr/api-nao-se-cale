@@ -77,3 +77,15 @@ export const promoteUserToAdmin = asyncHandler(async (req: AuthedRequest, res: R
     .status(200)
     .json({ message: `Sucesso! ${email} agora é um administrador.` });
 });
+
+/**
+ * Deleta um usuário do Firebase Authentication pelo seu UID.
+ * Chamado por DELETE /api/admin/users/:id
+ */
+export const deleteUser = asyncHandler(async (req: AuthedRequest, res: Response) => {
+  const { id } = req.params; // O ID aqui é o UID do Firebase
+
+  await admin.auth().deleteUser(id);
+
+  res.status(204).send();
+});
