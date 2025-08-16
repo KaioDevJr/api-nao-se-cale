@@ -16,16 +16,6 @@ const upload = multer({
     },
 });
 
-// Middleware customizado para aplicar autenticação apenas para o tipo 'banner'
-const requireAdminForBanner = (req: AuthedRequest, res: Response, next: NextFunction) => {
-    if (req.body?.type === 'banner') {
-        // Se for banner, executa a cadeia de autenticação de admin
-        return verifyToken(req, res, () => requireAdmin(req, res, next));
-    }
-    // Para outros tipos (ex: 'report'), permite o acesso público
-    next();
-};
-
 /**
  * NEW ROUTE: POST /api/uploads/file
  * Handles direct file upload using multipart/form-data.
@@ -42,7 +32,7 @@ router.post(
                 return res.status(400).json({ error: "No file uploaded." });
             }
 
-            const destination = req.body.destination || 'general'; // e.g., 'banners', 'reports'
+            const destination = req.body.destination || 'general'; // e.g., 'banners'
 
             // Example of permission check: only admins can upload to 'banners' folder.
             if (destination === 'banners' && !req.user?.isAdmin) {
@@ -60,21 +50,18 @@ router.post(
     }
 );
 
-router.post("/signed-url", requireAdminForBanner, async (req: AuthedRequest, res: Response) => {
+router.post("/signed-url", verifyToken, requireAdmin, async (req: AuthedRequest, res: Response) => {
     try {
         const { type, filename, contentType } = req.body ?? {};
         if (!type || !filename || !contentType)
             return res.status(400).json({ error: "type, filename, contentType required" });
 
-        let filePath: string;
-
-        if (type === "banner") {
-            filePath = `banners/${Date.now()}_${filename}`;
-        } else if (type === "report") {
-            filePath = `reports/${Date.now()}_${filename}`;
-        } else {
-            return res.status(400).json({ error: "Invalid type. Must be 'report' or 'banner'." });
+        if (type !== "banner") {
+            return res.status(400).json({ error: "Invalid type. Must be 'banner'." });
         }
+
+        // Apenas o tipo 'banner' é permitido e requer admin (verificado pelo middleware)
+        const filePath = `banners/${Date.now()}_${filename}`;
 
         const file = bucket.file(filePath);
         const [url] = await file.getSignedUrl({
