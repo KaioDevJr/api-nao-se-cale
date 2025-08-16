@@ -33,5 +33,5 @@ app.use("/api/public", publicRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/uploads", uploadRoutes);
 
-const port = Number(process.env.PORT || 5000);
+const port = Number(process.env.PORT || 5001);
 app.listen(port, () => console.log(`API on http://localhost:${port}`));

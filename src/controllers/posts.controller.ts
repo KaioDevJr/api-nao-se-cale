@@ -1,14 +1,12 @@
 import { Request, Response } from 'express';
 import * as PostService from '../services/posts.service.js';
 import { createPostSchema, updatePostSchema } from '../schemas/posts.schema.js';
-import { z } from "zod";
 
 export const createPost = async (req: Request, res: Response) => {
   try {        
     const validation = createPostSchema.safeParse(req.body);
     if (!validation.success) {        
-      return res.status(400).json({error: z.treeifyError(validation.error)
-      });
+      return res.status(400).json({error: validation.error.format()});
     }
     const post = await PostService.createPost(validation.data);
     res.status(201).json(post);
