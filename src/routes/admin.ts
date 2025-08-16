@@ -8,7 +8,7 @@ import sectionIniciativasRoutes from "./sectionIniciativas.routes.js";
 import postsRoutes from "./posts.routes.js";
 import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes.js";
 import porqueAderimosRoutes from "./porqueAderimos.routes.js";
-import { createAdminUser, promoteUserToAdmin } from "../controllers/auth.controller.js";
+import { createAdminUser, promoteUserToAdmin, listAllUsers } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -25,6 +25,10 @@ router.get("/banners", async (_req: AuthedRequest, res: Response) => {
     return res.status(500).json({ error: e.message });
   }
 });
+
+// Lista todos os usuários
+router.get("/users", listAllUsers);
+
 // Cria um novo usuário com permissão de admin
 router.post("/users", createAdminUser);
 
