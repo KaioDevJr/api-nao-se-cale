@@ -1,52 +1,116 @@
-import { Response } from 'express';
-import { admin } from '../services/firebase.js'; // Assumindo que seu admin do Firebase é inicializado aqui
-import { AuthedRequest } from '../types/express';
+import { Response } from "express";
+import { admin } from "../services/firebase.js";
+import { AuthedRequest } from "../types/express.js";
 
-/**
- * Controlador para criar um novo usuário com permissões de administrador no Firebase.
- * Esta rota deve ser protegida para ser acessível apenas por administradores existentes.
- * @param req - O objeto de requisição do Express, contendo email, password e name no corpo.
- * @param res - O objeto de resposta do Express.
- */
-export const createAdminUser = async (req: AuthedRequest, res: Response) => {
-    const { email, password, name } = req.body;
-
-    if (!email || !password || !name) {
-        return res.status(400).json({ error: 'Email, senha e nome são obrigatórios.' });
-    }
-
-    try {
-        // 1. Cria o usuário no Firebase Authentication
-        const userRecord = await admin.auth().createUser({
-            email,
-            password,
-            displayName: name,
-            emailVerified: true, // Opcional: marcar o email como verificado
-            disabled: false,
-        });
-
-        // 2. Adiciona a "claim" (permissão) de administrador ao novo usuário
-        await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
-
-        console.log(`Usuário administrador criado com sucesso: ${userRecord.uid}`);
-
-        // Retorna uma resposta de sucesso sem informações sensíveis
-        return res.status(201).json({
-            message: 'Usuário administrador criado com sucesso.',
-            uid: userRecord.uid,
-        });
-
-    } catch (error: any) {
-        console.error('Erro ao criar usuário administrador:', error);
-
-        if (error.code === 'auth/email-already-exists') {
-            return res.status(409).json({ error: 'O endereço de e-mail já está em uso por outra conta.' });
-        }
-        if (error.code === 'auth/invalid-password') {
-            return res.status(400).json({ error: 'A senha deve ser uma string com pelo menos 6 caracteres.' });
-        }
-
-        return res.status(500).json({ error: 'Falha ao criar usuário administrador.' });
-    }
+// Um "type guard" para verificar se o erro é um erro do Firebase Auth com código.
+// Isso nos dá autocompletar e segurança de tipo dentro do bloco if.
+const isFirebaseAuthError = (
+  error: unknown
+): error is { code: string; message: string } => {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    "message" in error
+  );
 };
 
+/**
+ * Cria um novo usuário JÁ com permissões de administrador.
+ * Chamado por POST /api/admin/users
+ */
+export const createAdminUser = async (req: AuthedRequest, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email e senha são obrigatórios." });
+    }
+
+    const userRecord = await admin.auth().createUser({
+      email: email,
+      password: password,
+    });
+
+    await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
+
+    return res.status(201).json({
+      message: `Usuário administrador criado com sucesso: ${userRecord.email}`,
+      uid: userRecord.uid,
+    });
+  } catch (error: unknown) {
+    console.error("Erro ao criar usuário admin:", error);
+    if (isFirebaseAuthError(error)) {
+      if (error.code === "auth/email-already-exists") {
+        return res
+          .status(409)
+          .json({ error: "O endereço de e-mail já está em uso." });
+      }
+      return res
+        .status(500)
+        .json({ error: "Erro Interno do Servidor", details: error.message });
+    }
+    return res.status(500).json({ error: "Ocorreu um erro inesperado." });
+  }
+};
+
+/**
+ * Lista todos os usuários do Firebase Authentication.
+ * Idealmente chamado por GET /api/admin/users
+ */
+export const listAllUsers = async (_req: AuthedRequest, res: Response) => {
+  try {
+    const listUsersResult = await admin.auth().listUsers(); // Por padrão, busca até 1000 usuários
+    const users = listUsersResult.users.map((userRecord) => {
+      // Mapeia para um formato mais limpo, evitando expor dados desnecessários
+      return {
+        uid: userRecord.uid,
+        email: userRecord.email,
+        displayName: userRecord.displayName,
+        disabled: userRecord.disabled,
+        customClaims: userRecord.customClaims,
+        creationTime: userRecord.metadata.creationTime,
+        lastSignInTime: userRecord.metadata.lastSignInTime,
+      };
+    });
+    return res.status(200).json(users);
+  } catch (error: unknown) {
+    console.error("Erro ao listar usuários:", error);
+    if (isFirebaseAuthError(error)) {
+      return res.status(500).json({ error: "Erro Interno do Servidor ao listar usuários", details: error.message });
+    }
+    return res.status(500).json({ error: "Ocorreu um erro inesperado ao listar usuários." });
+  }
+};
+
+/**
+ * Promove um usuário EXISTENTE para o status de administrador.
+ * Chamado por PUT /api/admin/users/promote
+ */
+export const promoteUserToAdmin = async (req: AuthedRequest, res: Response) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: "O e-mail é obrigatório." });
+    }
+
+    const user = await admin.auth().getUserByEmail(email);
+    await admin.auth().setCustomUserClaims(user.uid, { admin: true });
+
+    return res
+      .status(200)
+      .json({ message: `Sucesso! ${email} agora é um administrador.` });
+  } catch (error: unknown) {
+    console.error("Erro ao promover usuário para admin:", error);
+    if (isFirebaseAuthError(error)) {
+      if (error.code === "auth/user-not-found") {
+        return res.status(404).json({
+          error: `Usuário com e-mail ${req.body.email} não encontrado.`,
+        });
+      }
+      return res
+        .status(500)
+        .json({ error: "Erro Interno do Servidor", details: error.message });
+    }
+    return res.status(500).json({ error: "Ocorreu um erro inesperado." });
+  }
+};

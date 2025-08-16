@@ -8,7 +8,7 @@ import sectionIniciativasRoutes from "./sectionIniciativas.routes.js";
 import postsRoutes from "./posts.routes.js";
 import sectionCanaisDenunciaRoutes from "./sectionCanaisDenuncia.routes.js";
 import porqueAderimosRoutes from "./porqueAderimos.routes.js";
-import { createAdminUser } from "../controllers/auth.controller.js";
+import { createAdminUser, promoteUserToAdmin } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -25,7 +25,11 @@ router.get("/banners", async (_req: AuthedRequest, res: Response) => {
     return res.status(500).json({ error: e.message });
   }
 });
+// Cria um novo usuário com permissão de admin
 router.post("/users", createAdminUser);
+
+// Promove um usuário existente para admin, baseado no e-mail
+router.put("/users/promote", promoteUserToAdmin);
 
 
 router.post("/banners/confirm", async (req: AuthedRequest, res: Response) => {
